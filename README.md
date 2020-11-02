@@ -4,4 +4,8 @@ As the name suggest this is a python command line tool generates a words list fr
 
 Usage
 
-% keepass2wordslist filename
+% python3 keepass2wordslist.py filename password -v -o output_filename
+
+Example
+
+% python3 keepass2wordslist.py keepass.kdbx thefilestrongpassword
