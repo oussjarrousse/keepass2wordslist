@@ -19,13 +19,13 @@ def main(args, loglevel):
 # the program.
 if __name__ == '__main__':
   parser = argparse.ArgumentParser( 
-                                    description = "Does a thing to some stuff.",
-                                    epilog = "As an alternative to the commandline, params can be placed in a file, one per line, and specified on the commandline like '%(prog)s @params.conf'.",
+                                    description = "Takes a KeePass file and generates a wordlist",
+                                    epilog = "",
                                     fromfile_prefix_chars = '@' )
   # TODO Specify your real parameters here.
   parser.add_argument(
                       "filename",
-                      help = "the path to a keepass file",
+                      help = "the path to a KeePass file",
                       metavar = "INPUT")
   parser.add_argument(
                       "-v",
