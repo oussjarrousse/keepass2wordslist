@@ -54,9 +54,9 @@ def main(args):
 # Standard boilerplate to call the main() function to begin
 # the program.
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(
-                        description = "Does a thing to some stuff.",
-                        epilog = "As an alternative to the commandline, params can be placed in a file, one per line, and specified on the commandline like '%(prog)s @params.conf'.",
+  parser = argparse.ArgumentParser( 
+                        description = "Takes a KeePass file and generates a wordlist",
+                        epilog = "",
                         fromfile_prefix_chars = '@' )
     parser.add_argument(
                         "filename",
