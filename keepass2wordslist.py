@@ -6,8 +6,10 @@ import sys, argparse, logging
 from pykeepass import PyKeePass
 from pykeepass.exceptions import CredentialsError
 
+loglevel = logging.INFO
+
 # Gather our code in a main() function
-def main(args, loglevel):
+def main(args):
     try:
         logging.basicConfig(format="%(levelname)s: %(message)s", level=loglevel)
         logging.debug("Extracting passwords from: {}".format(args.filename))
@@ -17,7 +19,7 @@ def main(args, loglevel):
             logging.debug("Dumping unique passwords to {}").format(args.output)
 
         #Opening the keepass file
-        kp = PyKeePass(args.filename, password=args.password)
+        kp = PyKeePass(args.filename, password=args.password, keyfile=args.key)
     except CredentialsError as e:
         logging.info('Incorrect Password')
         exit(1)
@@ -53,10 +55,9 @@ def main(args, loglevel):
 # the program.
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
-                                    description = "Does a thing to some stuff.",
-                                    epilog = "As an alternative to the commandline, params can be placed in a file, one per line, and specified on the commandline like '%(prog)s @params.conf'.",
-                                    fromfile_prefix_chars = '@' )
-    # TODO Specify your real parameters here.
+                        description = "Does a thing to some stuff.",
+                        epilog = "As an alternative to the commandline, params can be placed in a file, one per line, and specified on the commandline like '%(prog)s @params.conf'.",
+                        fromfile_prefix_chars = '@' )
     parser.add_argument(
                         "filename",
                         help = "the path to a keepass file",
@@ -65,24 +66,25 @@ if __name__ == '__main__':
                         "password",
                         help = "The password of the keepass file",
                         metavar = "PASSWORD")
+    parser.add_argument("-k",
+                        "--key",
+                        default=None,
+                        help="certificate",
+                        type=argparse.FileType('r'))
     parser.add_argument(
                         "-v",
                         "--verbose",
                         help="increase output verbosity",
                         action="store_true")
-
     parser.add_argument(
                         "-o",
                         "--output",
                         help="output filename",
                         type=argparse.FileType('w'))
-
     args = parser.parse_args()
   
     # Setup logging
     if args.verbose:
         loglevel = logging.DEBUG
-    else:
-        loglevel = logging.INFO
   
-    main(args, loglevel)
+    main(args)
